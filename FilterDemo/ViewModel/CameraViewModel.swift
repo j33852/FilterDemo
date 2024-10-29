@@ -36,7 +36,6 @@ class CameraViewModel: ObservableObject {
         self.fetchResult = PHAsset.fetchAssets(with: .image, options: fetchOptions)
     }
     
-    
     func toggleScaling() {
         isScaling = !isScaling
     }
@@ -52,6 +51,7 @@ class CameraViewModel: ObservableObject {
         isCameraActive.toggle()
     }
     
+    // TODO: 写真の比例はまた確認することが必要
     func cropPhotoAndSave(image: UIImage) {
         
         guard let cgImage = image.cgImage else { return }
