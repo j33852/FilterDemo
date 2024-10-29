@@ -8,8 +8,28 @@
 import SwiftUI
 
 struct TestView: View {
+    @StateObject private var viewModel = PhotoViewModel()
+    @State private var selectedImgae: UIImage? = nil
+    
+    let screenWidth = UIScreen.main.bounds.width
+    let screenHeight = UIScreen.main.bounds.height
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            if let image = selectedImgae {
+                Image(uiImage: image)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: screenWidth, height: 300)
+            } else {
+                Text("Choose one photo")
+                    .frame(width: screenWidth, height: 300)
+            }
+            
+            Divider()
+            
+//            CustomPhotoLibraryView(viewModel: viewModel, selectedImage: $selectedImgae)
+//                .frame(width: screenWidth, height: 400)
+        }
     }
 }
 

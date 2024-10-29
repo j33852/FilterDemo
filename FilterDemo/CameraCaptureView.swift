@@ -10,8 +10,8 @@ import AVFoundation
 import SwiftUI
 
 struct CameraCaptureView: UIViewControllerRepresentable {
-    @Binding var image: UIImage?
-    @Binding var didTapCapture: Bool
+    
+    @ObservedObject var viewModel: CameraViewModel
     
     func makeUIViewController(context: Context) -> CustomCameraController {
         let controller = CustomCameraController()
@@ -21,12 +21,11 @@ struct CameraCaptureView: UIViewControllerRepresentable {
     
     func updateUIViewController(_ cameraViewController: CustomCameraController, context: Context) {
         
-        if(self.didTapCapture) {
+        // ここでviewModelの変数を変更しない
+        if viewModel.didTapCapture {
             cameraViewController.didTapRecord()
         }
         
-        cameraViewController.cameraPreviewLayer?.frame = cameraViewController.view.bounds
-
     }
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
@@ -40,96 +39,58 @@ struct CameraCaptureView: UIViewControllerRepresentable {
         }
         
         func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
-            
-            parent.didTapCapture = false
-            
-            if let imageData = photo.fileDataRepresentation() {
-                parent.image = UIImage(data: imageData)
+                        
+            if let imageData = photo.fileDataRepresentation(), let image = UIImage(data: imageData) {
+                
+                parent.viewModel.cropPhotoAndSave(image: image)
             }
+            
+            parent.viewModel.didTapCapture = false
+
         }
     }
 }
 
 class CustomCameraController: UIViewController {
-    
-    var image: UIImage?
-    
     var captureSession = AVCaptureSession()
-    var backCamera: AVCaptureDevice?
-    var frontCamera: AVCaptureDevice?
-    var currentCamera: AVCaptureDevice?
-    var photoOutput: AVCapturePhotoOutput?
+    var photoOutput = AVCapturePhotoOutput()
     var cameraPreviewLayer: AVCaptureVideoPreviewLayer?
-    
-    //DELEGATE
     var delegate: AVCapturePhotoCaptureDelegate?
-    
-    func didTapRecord() {
-        
-        let settings = AVCapturePhotoSettings()
-        photoOutput?.capturePhoto(with: settings, delegate: delegate!)
-        
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setup()
-    }
-    func setup() {
-        setupCaptureSession()
-        setupDevice()
-        setupInputOutput()
-        setupPreviewLayer()
-        startRunningCaptureSession()
-    }
-    func setupCaptureSession() {
-        captureSession.sessionPreset = AVCaptureSession.Preset.photo
+        setupCamera()
     }
     
-    func setupDevice() {
-        let deviceDiscoverySession = AVCaptureDevice.DiscoverySession(deviceTypes: [AVCaptureDevice.DeviceType.builtInWideAngleCamera],
-                                                                      mediaType: AVMediaType.video,
-                                                                      position: AVCaptureDevice.Position.unspecified)
-        for device in deviceDiscoverySession.devices {
-            
-            switch device.position {
-            case AVCaptureDevice.Position.front:
-                self.frontCamera = device
-            case AVCaptureDevice.Position.back:
-                self.backCamera = device
-            default:
-                break
-            }
+    override func viewDidLayoutSubviews() {
+        cameraPreviewLayer?.frame = view.bounds
+    }
+    
+    func setupCamera() {
+        captureSession.sessionPreset = .photo
+        
+        // 配置設備
+        guard let backCamera = AVCaptureDevice.default(for: .video),
+              let input = try? AVCaptureDeviceInput(device: backCamera) else { return }
+        
+        captureSession.addInput(input)
+        
+        // 配置輸出
+        captureSession.addOutput(photoOutput)
+        
+        // 配置預覽層
+        cameraPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+        cameraPreviewLayer?.videoGravity = .resizeAspectFill
+        cameraPreviewLayer?.frame = view.bounds
+        if let cameraPreviewLayer = cameraPreviewLayer {
+            view.layer.addSublayer(cameraPreviewLayer)
         }
         
-        self.currentCamera = self.backCamera
-    }
-    
-    
-    func setupInputOutput() {
-        do {
-            
-            let captureDeviceInput = try AVCaptureDeviceInput(device: currentCamera!)
-            captureSession.addInput(captureDeviceInput)
-            photoOutput = AVCapturePhotoOutput()
-            photoOutput?.setPreparedPhotoSettingsArray([AVCapturePhotoSettings(format: [AVVideoCodecKey: AVVideoCodecType.jpeg])], completionHandler: nil)
-            captureSession.addOutput(photoOutput!)
-            
-        } catch {
-            print(error)
-        }
-        
-    }
-    func setupPreviewLayer()
-    {
-        self.cameraPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-        self.cameraPreviewLayer?.videoGravity = AVLayerVideoGravity.resizeAspectFill
-        self.cameraPreviewLayer?.connection?.videoOrientation = AVCaptureVideoOrientation.portrait
-        self.cameraPreviewLayer?.frame = self.view.bounds
-        self.view.layer.insertSublayer(cameraPreviewLayer!, at: 0)
-        
-    }
-    func startRunningCaptureSession(){
         captureSession.startRunning()
+    }
+    
+    func didTapRecord() {
+        let settings = AVCapturePhotoSettings()
+        photoOutput.capturePhoto(with: settings, delegate: delegate!)
     }
 }

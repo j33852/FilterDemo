@@ -8,11 +8,43 @@
 import SwiftUI
 
 struct PostView: View {
+    
+    
+    @Environment(\.dismiss) var dismiss
+
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            
+        }
     }
 }
 
 #Preview {
     PostView()
+}
+
+extension PostView {
+    var headerView: some View {
+        HStack {
+            CameraButtonView(imageName: "x.circle") {
+                dismiss()
+            }
+            
+
+                Spacer()
+                Button {
+                    
+                } label: {
+                    Text("カメラロール")
+                }
+
+                Spacer()
+                CameraButtonView(imageName: "arrowshape.right") {
+                }
+                .padding(.trailing)
+            
+            
+        }
+        .padding(.horizontal, 20)
+    }
 }

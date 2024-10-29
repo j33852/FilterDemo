@@ -6,3 +6,10 @@
 //
 
 import Foundation
+
+struct Symbol: Identifiable {
+    var id = UUID()
+    var imageName: String
+    var name: String
+    
+}

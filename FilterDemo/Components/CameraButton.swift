@@ -7,12 +7,49 @@
 
 import SwiftUI
 
-struct CameraButton: View {
+struct CameraButtonView: View {
+    let imageName: String
+    let action: () -> Void
+
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Button {
+            action()
+        } label: {
+            Image(systemName: imageName)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 30, height: 30)
+                .foregroundColor(.black)
+        }
+
+    }
+}
+
+struct AiButtonView: View {
+    let aiPoint: String
+    let action: () -> Void
+    
+    var body: some View {
+        Button {
+            action()
+        } label: {
+            HStack {
+                Text(aiPoint)
+                    .font(.title)
+                    .foregroundColor(.black)
+                
+                Image(systemName: "automatic.brakesignal")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 60, height: 30)
+                    .foregroundColor(.black)
+            }
+        }
     }
 }
 
 #Preview {
-    CameraButton()
+    CameraButtonView(imageName: "", action: {
+        
+    })
 }
