@@ -11,9 +11,28 @@ enum CommonSheetData {
 }
 
 enum CommonSheetStatus {
+    case showProduct
     case showPhoto
     case showRecipe
     case showOption
+    
+    var description: String {
+        switch self {
+        case .showProduct: "使ってみた商品"
+        case .showPhoto: "つくフォトを送る"
+        case .showRecipe: "レシピ"
+        case .showOption: "オプション"
+        }
+    }
+    
+    var imageName: String {
+        switch self {
+        case .showProduct: "waterbottle"
+        case .showPhoto: "frying.pan"
+        case .showRecipe: "fork.knife"
+        case .showOption: "water.waves"
+        }
+    }
 }
 
 enum PostStatus: CaseIterable, Identifiable{

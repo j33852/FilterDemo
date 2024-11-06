@@ -7,9 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9782315B2CD493E1005339CF /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = 9782315A2CD493E1005339CF /* Introspect */; };
 		978231782CDB06CC005339CF /* SheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978231772CDB06CC005339CF /* SheetView.swift */; };
 		9782317A2CDB08E2005339CF /* SheetData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978231792CDB08E2005339CF /* SheetData.swift */; };
+		9782317C2CDB0E53005339CF /* PostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9782317B2CDB0E53005339CF /* PostViewModel.swift */; };
+		9782317F2CDB1298005339CF /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = 9782317E2CDB1298005339CF /* Introspect */; };
+		978231812CDB1298005339CF /* SwiftUIIntrospect in Frameworks */ = {isa = PBXBuildFile; productRef = 978231802CDB1298005339CF /* SwiftUIIntrospect */; };
 		97BB814A2CB8CA4C0024F5BA /* FilterDemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BB81492CB8CA4C0024F5BA /* FilterDemoApp.swift */; };
 		97BB814C2CB8CA4C0024F5BA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BB814B2CB8CA4C0024F5BA /* ContentView.swift */; };
 		97BB814E2CB8CA4D0024F5BA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97BB814D2CB8CA4D0024F5BA /* Assets.xcassets */; };
@@ -25,7 +27,6 @@
 		97BB816B2CBF56C30024F5BA /* CameraButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BB816A2CBF56C30024F5BA /* CameraButton.swift */; };
 		97BB816D2CC0A6860024F5BA /* CameraViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BB816C2CC0A6860024F5BA /* CameraViewModel.swift */; };
 		97BB816F2CC0A6B10024F5BA /* LibraryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BB816E2CC0A6B10024F5BA /* LibraryViewModel.swift */; };
-		97BB81712CC0A7850024F5BA /* PostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BB81702CC0A7850024F5BA /* PostViewModel.swift */; };
 		97C8683A2CCF265E0074D994 /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C868392CCF265E0074D994 /* PostView.swift */; };
 		97C8683E2CCF2A6D0074D994 /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C8683D2CCF2A6D0074D994 /* FilterView.swift */; };
 /* End PBXBuildFile section */
@@ -33,6 +34,7 @@
 /* Begin PBXFileReference section */
 		978231772CDB06CC005339CF /* SheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetView.swift; sourceTree = "<group>"; };
 		978231792CDB08E2005339CF /* SheetData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetData.swift; sourceTree = "<group>"; };
+		9782317B2CDB0E53005339CF /* PostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewModel.swift; sourceTree = "<group>"; };
 		97BB81462CB8CA4C0024F5BA /* FilterDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FilterDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		97BB81492CB8CA4C0024F5BA /* FilterDemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterDemoApp.swift; sourceTree = "<group>"; };
 		97BB814B2CB8CA4C0024F5BA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -49,7 +51,6 @@
 		97BB816A2CBF56C30024F5BA /* CameraButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraButton.swift; sourceTree = "<group>"; };
 		97BB816C2CC0A6860024F5BA /* CameraViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewModel.swift; sourceTree = "<group>"; };
 		97BB816E2CC0A6B10024F5BA /* LibraryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewModel.swift; sourceTree = "<group>"; };
-		97BB81702CC0A7850024F5BA /* PostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewModel.swift; sourceTree = "<group>"; };
 		97C868392CCF265E0074D994 /* PostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostView.swift; sourceTree = "<group>"; };
 		97C8683D2CCF2A6D0074D994 /* FilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -59,7 +60,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9782315B2CD493E1005339CF /* Introspect in Frameworks */,
+				9782317F2CDB1298005339CF /* Introspect in Frameworks */,
+				978231812CDB1298005339CF /* SwiftUIIntrospect in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,6 +119,7 @@
 			children = (
 				97BB816C2CC0A6860024F5BA /* CameraViewModel.swift */,
 				97BB81642CBE243E0024F5BA /* PhotoViewModel.swift */,
+				9782317B2CDB0E53005339CF /* PostViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -126,7 +129,6 @@
 			children = (
 				97BB81672CBE28790024F5BA /* ImageModel.swift */,
 				97BB816E2CC0A6B10024F5BA /* LibraryViewModel.swift */,
-				97BB81702CC0A7850024F5BA /* PostViewModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -174,7 +176,8 @@
 			);
 			name = FilterDemo;
 			packageProductDependencies = (
-				9782315A2CD493E1005339CF /* Introspect */,
+				9782317E2CDB1298005339CF /* Introspect */,
+				978231802CDB1298005339CF /* SwiftUIIntrospect */,
 			);
 			productName = FilterDemo;
 			productReference = 97BB81462CB8CA4C0024F5BA /* FilterDemo.app */;
@@ -205,7 +208,7 @@
 			);
 			mainGroup = 97BB813D2CB8CA4C0024F5BA;
 			packageReferences = (
-				978231592CD493E1005339CF /* XCRemoteSwiftPackageReference "swiftui-introspect" */,
+				9782317D2CDB1298005339CF /* XCRemoteSwiftPackageReference "swiftui-introspect" */,
 			);
 			productRefGroup = 97BB81472CB8CA4C0024F5BA /* Products */;
 			projectDirPath = "";
@@ -241,7 +244,6 @@
 				97BB816F2CC0A6B10024F5BA /* LibraryViewModel.swift in Sources */,
 				97BB816D2CC0A6860024F5BA /* CameraViewModel.swift in Sources */,
 				97BB815C2CB912780024F5BA /* LibraryView.swift in Sources */,
-				97BB81712CC0A7850024F5BA /* PostViewModel.swift in Sources */,
 				97BB81652CBE243E0024F5BA /* PhotoViewModel.swift in Sources */,
 				97BB81622CBE064B0024F5BA /* TestView.swift in Sources */,
 				9782317A2CDB08E2005339CF /* SheetData.swift in Sources */,
@@ -251,6 +253,7 @@
 				97C8683A2CCF265E0074D994 /* PostView.swift in Sources */,
 				97BB815E2CB913330024F5BA /* CameraRootView.swift in Sources */,
 				978231782CDB06CC005339CF /* SheetView.swift in Sources */,
+				9782317C2CDB0E53005339CF /* PostViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -462,7 +465,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		978231592CD493E1005339CF /* XCRemoteSwiftPackageReference "swiftui-introspect" */ = {
+		9782317D2CDB1298005339CF /* XCRemoteSwiftPackageReference "swiftui-introspect" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/siteline/swiftui-introspect.git";
 			requirement = {
@@ -473,10 +476,15 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		9782315A2CD493E1005339CF /* Introspect */ = {
+		9782317E2CDB1298005339CF /* Introspect */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 978231592CD493E1005339CF /* XCRemoteSwiftPackageReference "swiftui-introspect" */;
+			package = 9782317D2CDB1298005339CF /* XCRemoteSwiftPackageReference "swiftui-introspect" */;
 			productName = Introspect;
+		};
+		978231802CDB1298005339CF /* SwiftUIIntrospect */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9782317D2CDB1298005339CF /* XCRemoteSwiftPackageReference "swiftui-introspect" */;
+			productName = SwiftUIIntrospect;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
