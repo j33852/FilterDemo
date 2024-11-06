@@ -195,7 +195,7 @@ extension PostView {
             
             Picker("", selection: $selectedStatus) {
                 ForEach(PostStatus.allCases) { status in
-                    Text(String(describing: status))
+                    Text(status.description)
                 }
                 
             }
