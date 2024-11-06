@@ -12,30 +12,70 @@ struct PostView: View {
     @State private var items = Array(1...5)
     @State private var contentHeight: CGFloat = 30
     @State private var text = ""
+    @State private var isSheetPresent = false
+    @State private var postStatus: PostStatus = .public
+    @State private var selectedStatus: PostStatus = .public
+    @State private var commonSheetStatus: CommonSheetStatus?
     @FocusState var focusField: Bool
     
+    @Environment(\.dismiss) var dismiss
+    let screenHeight = UIScreen.main.bounds.height
+    
     var body: some View {
-        GeometryReader { geometry in
-            ScrollView {
-                content
-                    .background(
-                        GeometryReader { proxy in
-                            Color.clear
-                                .preference(key: ContentHeightKey.self, value: proxy.size.height)
+        
+        ZStack {
+            VStack {
+                headerView
+                
+                GeometryReader { geometry in
+                    ScrollView {
+                        content
+                            .background(
+                                GeometryReader { proxy in
+                                    Color.clear
+                                        .preference(key: ContentHeightKey.self, value: proxy.size.height)
+                                }
+                            )
+                        
+                    }
+                    .introspectScrollView { scrollView in
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                            scrollView.isScrollEnabled = contentHeight > geometry.size.height
                         }
-                    )
+                    }
+                }
+                .onPreferenceChange(ContentHeightKey.self) { newContentHeight in
+                    contentHeight = newContentHeight
+                }
+                
+                Spacer()
                 
             }
-            .introspectScrollView { scrollView in
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                    scrollView.isScrollEnabled = contentHeight > geometry.size.height
+            
+            
+            if isSheetPresent {
+                Color.black.opacity(0.4)
+                    .edgesIgnoringSafeArea(.all)
+                    .onTapGesture {
+                        isSheetPresent.toggle()
+                        selectedStatus = postStatus
+                    }
+                
+                VStack {
+                    Spacer()
+                    sheetView
+                    
                 }
+                .transition(.opacity.combined(with: .move(edge: .bottom)))
+                .animation(.easeInOut(duration: 0.5), value: isSheetPresent)
+                             
             }
+            
         }
-        .onPreferenceChange(ContentHeightKey.self) { newContentHeight in
-            contentHeight = newContentHeight
-        }
+        
+        
     }
+    
 }
 
 extension PostView {
@@ -94,6 +134,84 @@ extension PostView {
             }
         }
     }
+}
+
+extension PostView {
+    var headerView: some View {
+        HStack {
+            CameraButtonView(imageName: "x.circle") {
+                dismiss()
+            }
+            
+            Spacer()
+            
+            Button {
+                withAnimation {
+                    isSheetPresent.toggle()
+                }
+                
+            } label: {
+                HStack {
+                    Text(postStatus.description)
+                    
+                    Image(systemName: "chevron.down")
+                }
+            }
+            
+            Spacer()
+            
+            Button("投稿する") {
+                
+            }
+
+            
+        }
+        .padding(.horizontal, 20)
+    }
+    
+    var sheetView: some View {
+        VStack(alignment: .center)  {
+            HStack {
+                Button("キャンセル") {
+                    isSheetPresent.toggle()
+                    selectedStatus = postStatus
+                }
+                .padding(.leading, 10)
+                
+                Spacer()
+                
+                Button("決定") {
+                    isSheetPresent.toggle()
+                    postStatus = selectedStatus
+                }
+                .padding(.trailing, 10)
+            }
+            .frame(height: 40)
+            .background(Color(UIColor.systemGray6))
+            .foregroundColor(.gray)
+            .font(.headline)
+            .offset(y: -30)
+                    
+            
+            Picker("", selection: $selectedStatus) {
+                ForEach(PostStatus.allCases) { status in
+                    Text(String(describing: status))
+                }
+                
+            }
+            .pickerStyle(.wheel)
+            
+            Spacer()
+
+        }
+        .frame(height: screenHeight * 0.25)
+        .background(.white)
+        
+    }
+}
+
+#Preview {
+    PostView()
 }
 
 struct ContentHeightKey: PreferenceKey {
