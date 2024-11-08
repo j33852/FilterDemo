@@ -15,8 +15,10 @@ class PostViewModel: ObservableObject {
     @Published var selectedStatus: PostStatus = .public
     
     // contentView
-    @Published var commonSheetStatus: CommonSheetStatus?
+    @Published var commonSheetStatus: CommonSheetStatus = .showPostStatus
     @Published var title: String = ""
     @Published var comment: String = ""
     @Published var isHandmade = false
+    
+    @Published var postNavigationTarget: PostNavigationTarget = .none
 }

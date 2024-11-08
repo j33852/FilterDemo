@@ -8,13 +8,6 @@
 import SwiftUI
 import Introspect // version: 0.5.0を使う
 
-enum PostNavigationTarget {
-    case none
-    case hashTag
-    case product
-    case qa
-}
-
 struct PostView: View {
     @State private var items = ["Yummy!!", "キャンペーン", "秋の行楽弁当"]
     @State private var contentHeight: CGFloat = 30
@@ -24,9 +17,7 @@ struct PostView: View {
     @State private var isSheetPresent = false
     @State private var isTitleEdit = false
     @State private var isCommentEdit = false
-    
-    @State private var postNavigationTarget: PostNavigationTarget = .none
-    
+        
     @StateObject private var viewModel = PostViewModel()
     
     @FocusState var titleFieldFocus: Bool
@@ -86,7 +77,7 @@ struct PostView: View {
             
             // 投稿状態のsheet
             if isSheetPresent {
-                Color.black.opacity(0.4)
+                Color.black.opacity(viewModel.commonSheetStatus == .showPostStatus ? 0.4 : 0.7)
                     .edgesIgnoringSafeArea(.all)
                     .onTapGesture {
                         isSheetPresent.toggle()
@@ -95,18 +86,23 @@ struct PostView: View {
                 
                 VStack {
                     Spacer()
-                    sheetView
+                    
+                    if viewModel.commonSheetStatus == .showPostStatus {
+                        sheetPostStatusView
+                    } else if viewModel.commonSheetStatus != .showProduct {
+                        sheetView(commonSheetStatus: viewModel.commonSheetStatus)
+                    }
+                    
                 }
                 .transition(.opacity.combined(with: .move(edge: .bottom)))
                 .animation(.easeInOut(duration: 0.5), value: isSheetPresent)
-                             
             }
             
             // 次の画面に遷移
             NavigationLink(
                 destination: destinationView()
-                    .onDisappear { postNavigationTarget = .none },
-                isActive: .constant(postNavigationTarget != .none)
+                    .onDisappear { viewModel.postNavigationTarget = .none },
+                isActive: .constant(viewModel.postNavigationTarget != .none)
             ) {
                 EmptyView()
             }
@@ -142,7 +138,7 @@ extension PostView {
     
     @ViewBuilder
     private func destinationView() -> some View {
-        switch postNavigationTarget {
+        switch viewModel.postNavigationTarget {
         case .hashTag:
             ContentView()
         case .product:
@@ -251,10 +247,22 @@ extension PostView {
                 postCellView(commonSheetStatus: .showProduct)
                 // つくフォトを送る
                 postCellView(commonSheetStatus: .showPhoto)
+                    .onTapGesture {
+                        isSheetPresent.toggle()
+                        viewModel.commonSheetStatus = .showPhoto
+                    }
                 // レシピ
                 postCellView(commonSheetStatus: .showRecipe)
+                    .onTapGesture {
+                        isSheetPresent.toggle()
+                        viewModel.commonSheetStatus = .showRecipe
+                    }
                 // オプション
                 postCellView(commonSheetStatus: .showOption)
+                    .onTapGesture {
+                        isSheetPresent.toggle()
+                        viewModel.commonSheetStatus = .showOption
+                    }
                 // SNS
                 HStack {
                     Text("投稿してSNS共有")
@@ -283,6 +291,7 @@ extension PostView {
             
             Button {
                 withAnimation {
+                    viewModel.commonSheetStatus = .showPostStatus
                     isSheetPresent.toggle()
                 }
                 
@@ -346,7 +355,7 @@ extension PostView {
         }
     }
     
-    var sheetView: some View {
+    var sheetPostStatusView: some View {
         VStack(alignment: .center)  {
             HStack {
                 Button("キャンセル") {
@@ -383,7 +392,15 @@ extension PostView {
         }
         .frame(height: screenHeight * 0.25)
         .background(.white)
-        
+    }
+    
+    func sheetView(commonSheetStatus: CommonSheetStatus) -> some View {
+        VStack {
+            Text(commonSheetStatus.description)
+                .foregroundColor(.white)
+            
+            sheetCellView(commonSheetStatus: commonSheetStatus)
+        }
     }
 }
 
@@ -450,7 +467,11 @@ extension PostView {
                                 Text("お料理のきっかけ、コメント、#ハッシュタグ")
                                     .foregroundColor(.gray)
                             }
+                            
+                            Color.clear
+                                .frame(maxWidth: .infinity, maxHeight: max(100, commentTextHeight))
                         }
+                        .background(.gray.opacity(0.0001))
                         .onTapGesture {
                             isTitleEdit = false
                             isCommentEdit = true
@@ -536,7 +557,7 @@ extension PostView {
                     )
                     .padding()
                     .onTapGesture {
-                        postNavigationTarget = .hashTag
+                        viewModel.postNavigationTarget = .hashTag
                     }
             }
             .font(.subheadline)
@@ -571,6 +592,62 @@ extension PostView {
             Spacer()
             Divider()
         }
+        .background(.gray.opacity(0.0001))
+    }
+    
+    func sheetCellView(commonSheetStatus: CommonSheetStatus) -> some View {
+        let photoItem = [
+            PhotoItem(imageName: "star.fill", name: "お気に入りから選択"),
+            PhotoItem(imageName: "moon.stars", name: "自分の投稿から選択")
+        ]
+        
+        let recipeItem = [
+            PhotoItem(imageName: "star.fill", name: "URLを入力"),
+            PhotoItem(imageName: "moon.stars", name: "ウェブで検索"),
+            PhotoItem(imageName: "circle.filled.ipad", name: "レシピを書く")
+        ]
+        
+        let optionItem = [
+            PhotoItem(imageName: "star.fill", name: "どこ"),
+            PhotoItem(imageName: "moon.stars", name: "誰と"),
+            PhotoItem(imageName: "lightbulb.max", name: "評価・価格・kcal")
+        ]
+        
+        var items = [PhotoItem]()
+        if commonSheetStatus == .showPhoto {
+            items = photoItem
+        } else if commonSheetStatus == .showRecipe {
+            items = recipeItem
+        } else {
+            items = optionItem
+        }
+        
+        return VStack(spacing: 0) {
+            ForEach(items) { item in
+                VStack {
+                    Spacer()
+                    HStack {
+                        Image(systemName: item.imageName)
+                            .resizable()
+                            .frame(width: iconWidth + 6, height: iconWidth + 6, alignment: .leading)
+                        
+                        Spacer()
+                        
+                        Text(item.name)
+                            .frame(maxWidth: .infinity, alignment: .center)
+                        
+                    }
+                    .padding(.horizontal, 20)
+                    Spacer()
+                    Divider()
+                }
+                .frame(height: screenHeight * 0.07)
+                .background(.white)
+            }
+            
+        }
+        
+        
     }
 }
 

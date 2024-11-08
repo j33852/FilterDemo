@@ -7,14 +7,19 @@
 
 import Foundation
 
-enum CommonSheetData {
+enum PostNavigationTarget {
+    case none
+    case hashTag
+    case product
+    case qa
 }
 
 enum CommonSheetStatus {
-    case showProduct
-    case showPhoto
-    case showRecipe
-    case showOption
+    case showPostStatus // 公開　or 非公開
+    case showProduct // 使ってみた商品
+    case showPhoto // つくフォトを送る
+    case showRecipe // レシピ
+    case showOption // オプション
     
     var description: String {
         switch self {
@@ -22,6 +27,7 @@ enum CommonSheetStatus {
         case .showPhoto: "つくフォトを送る"
         case .showRecipe: "レシピ"
         case .showOption: "オプション"
+        case .showPostStatus: ""
         }
     }
     
@@ -31,6 +37,7 @@ enum CommonSheetStatus {
         case .showPhoto: "frying.pan"
         case .showRecipe: "fork.knife"
         case .showOption: "water.waves"
+        case .showPostStatus: ""
         }
     }
 }

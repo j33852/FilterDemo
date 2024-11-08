@@ -7,9 +7,9 @@
 
 import Foundation
 
-struct Symbol: Identifiable {
+struct PhotoItem: Identifiable {
     var id = UUID()
     var imageName: String
     var name: String
-    
 }
+

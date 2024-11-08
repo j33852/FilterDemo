@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct LibraryView: View {
-    let symbols = [Symbol(imageName: "drop.fill", name: "drop"),
-                   Symbol(imageName: "flame.fill", name: "flame"),
-                   Symbol(imageName: "bolt.fill", name: "bolt"),
-                   Symbol(imageName: "leaf.fill", name: "leaf"),
-                   Symbol(imageName: "hare.fill", name: "hare"),
-                   Symbol(imageName: "tortoise.fill", name: "tortoise")
+    let symbols = [PhotoItem(imageName: "drop.fill", name: "drop"),
+                   PhotoItem(imageName: "flame.fill", name: "flame"),
+                   PhotoItem(imageName: "bolt.fill", name: "bolt"),
+                   PhotoItem(imageName: "leaf.fill", name: "leaf"),
+                   PhotoItem(imageName: "hare.fill", name: "hare"),
+                   PhotoItem(imageName: "tortoise.fill", name: "tortoise")
         ]
         
     let columns: [GridItem] = Array(repeating: GridItem(.flexible(), spacing: 1), count: 4)
