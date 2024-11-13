@@ -11,8 +11,8 @@ import SwiftUI
 struct FilterDemoApp: App {
     var body: some Scene {
         WindowGroup {
-//            CameraRootView()
-            PostView()
+            CameraRootView()
+//            PostView()
         }
     }
 }

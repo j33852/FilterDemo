@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import Photos
+import Combine
 
 enum FilterStatus {
     case fileter
@@ -25,6 +26,8 @@ class CameraViewModel: ObservableObject {
     // LibraryView
     @Published var fetchResult: PHFetchResult<PHAsset>?
     @Published var selectedImage: UIImage? = nil
+    
+    private var cancellables = Set<AnyCancellable>()
     
     init() {
         fetchPhotos()

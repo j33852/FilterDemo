@@ -11,10 +11,19 @@ import Photos
 import PhotosUI
 
 class CustomPhotoLibraryViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
-    var viewModel: CameraViewModel?
+    private var viewModel: CameraViewModel!
     private var collectionView: UICollectionView!
     var onSelectImage: ((UIImage) -> Void)?
     var onHeightUpdate: ((CGFloat) -> Void)?
+    
+    init(viewModel: CameraViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -127,16 +136,13 @@ class CustomPhotoLibraryViewController: UIViewController, UICollectionViewDelega
 
 struct CustomPhotoLibraryView: UIViewControllerRepresentable {
     @ObservedObject var viewModel: CameraViewModel
-//    @Binding var selectedImage: UIImage?
     var onHeightUpdate: ((CGFloat) -> Void)
 
     func makeUIViewController(context: Context) -> CustomPhotoLibraryViewController {
-        let viewController = CustomPhotoLibraryViewController()
+        let viewController = CustomPhotoLibraryViewController(viewModel: viewModel)
         viewController.onSelectImage = { image in
-//            self.selectedImage = image
             viewModel.selectedImage = image
         }
-        viewController.viewModel = viewModel
         viewController.onHeightUpdate = onHeightUpdate
         return viewController
     }

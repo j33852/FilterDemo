@@ -17,6 +17,7 @@ struct PostView: View {
     @State private var isSheetPresent = false
     @State private var isTitleEdit = false
     @State private var isCommentEdit = false
+    @State private var isCampaignView = false
         
     @StateObject private var viewModel = PostViewModel()
     
@@ -108,6 +109,11 @@ struct PostView: View {
             }
 
         }
+        .sheet(isPresented: $isCampaignView, onDismiss: {
+            
+        }, content: {
+            PostCampaignView()
+        })
         .navigationBarBackButtonHidden()
     }
 }
@@ -346,7 +352,7 @@ extension PostView {
                 .padding(.horizontal, 20)
                 .padding(.bottom, index == items.count - 1 ? 20 : 0)
                 .onTapGesture {
-                    
+                    isCampaignView.toggle()
                 }
             }
             

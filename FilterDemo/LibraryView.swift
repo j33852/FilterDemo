@@ -19,7 +19,6 @@ struct LibraryView: View {
     let columns: [GridItem] = Array(repeating: GridItem(.flexible(), spacing: 1), count: 4)
 
     @ObservedObject var viewModel: CameraViewModel
-//    @State private var selectedImage: UIImage? = nil
     @State private var photoLibraryHeight: CGFloat = 0
     
     let screenWidth = UIScreen.main.bounds.width

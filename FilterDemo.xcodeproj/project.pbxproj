@@ -13,6 +13,9 @@
 		9782317F2CDB1298005339CF /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = 9782317E2CDB1298005339CF /* Introspect */; };
 		978231812CDB1298005339CF /* SwiftUIIntrospect in Frameworks */ = {isa = PBXBuildFile; productRef = 978231802CDB1298005339CF /* SwiftUIIntrospect */; };
 		978231832CDDA450005339CF /* PostCampaignView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978231822CDDA450005339CF /* PostCampaignView.swift */; };
+		978231852CE1A404005339CF /* CameraModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978231842CE1A404005339CF /* CameraModel.swift */; };
+		978231872CE1BF0D005339CF /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978231862CE1BF0D005339CF /* Photo.swift */; };
+		978231892CE1D979005339CF /* TestAlbumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978231882CE1D979005339CF /* TestAlbumView.swift */; };
 		97BB814A2CB8CA4C0024F5BA /* FilterDemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BB81492CB8CA4C0024F5BA /* FilterDemoApp.swift */; };
 		97BB814C2CB8CA4C0024F5BA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BB814B2CB8CA4C0024F5BA /* ContentView.swift */; };
 		97BB814E2CB8CA4D0024F5BA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97BB814D2CB8CA4D0024F5BA /* Assets.xcassets */; };
@@ -37,6 +40,9 @@
 		978231792CDB08E2005339CF /* SheetData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetData.swift; sourceTree = "<group>"; };
 		9782317B2CDB0E53005339CF /* PostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewModel.swift; sourceTree = "<group>"; };
 		978231822CDDA450005339CF /* PostCampaignView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCampaignView.swift; sourceTree = "<group>"; };
+		978231842CE1A404005339CF /* CameraModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraModel.swift; sourceTree = "<group>"; };
+		978231862CE1BF0D005339CF /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
+		978231882CE1D979005339CF /* TestAlbumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestAlbumView.swift; sourceTree = "<group>"; };
 		97BB81462CB8CA4C0024F5BA /* FilterDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FilterDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		97BB81492CB8CA4C0024F5BA /* FilterDemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterDemoApp.swift; sourceTree = "<group>"; };
 		97BB814B2CB8CA4C0024F5BA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -104,6 +110,7 @@
 				97BB814D2CB8CA4D0024F5BA /* Assets.xcassets */,
 				97BB814F2CB8CA4D0024F5BA /* Preview Content */,
 				97BB81612CBE064B0024F5BA /* TestView.swift */,
+				978231882CE1D979005339CF /* TestAlbumView.swift */,
 			);
 			path = FilterDemo;
 			sourceTree = "<group>";
@@ -131,6 +138,8 @@
 			children = (
 				97BB81672CBE28790024F5BA /* ImageModel.swift */,
 				97BB816E2CC0A6B10024F5BA /* LibraryViewModel.swift */,
+				978231842CE1A404005339CF /* CameraModel.swift */,
+				978231862CE1BF0D005339CF /* Photo.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -239,8 +248,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				978231872CE1BF0D005339CF /* Photo.swift in Sources */,
 				97BB814C2CB8CA4C0024F5BA /* ContentView.swift in Sources */,
 				97BB81682CBE28790024F5BA /* ImageModel.swift in Sources */,
+				978231852CE1A404005339CF /* CameraModel.swift in Sources */,
 				97BB816B2CBF56C30024F5BA /* CameraButton.swift in Sources */,
 				97BB81582CB8CADE0024F5BA /* CameraCaptureView.swift in Sources */,
 				97BB814A2CB8CA4C0024F5BA /* FilterDemoApp.swift in Sources */,
@@ -249,6 +260,7 @@
 				97BB815C2CB912780024F5BA /* LibraryView.swift in Sources */,
 				97BB81652CBE243E0024F5BA /* PhotoViewModel.swift in Sources */,
 				97BB81622CBE064B0024F5BA /* TestView.swift in Sources */,
+				978231892CE1D979005339CF /* TestAlbumView.swift in Sources */,
 				9782317A2CDB08E2005339CF /* SheetData.swift in Sources */,
 				97BB815A2CB9101B0024F5BA /* CameraView.swift in Sources */,
 				97C8683E2CCF2A6D0074D994 /* FilterView.swift in Sources */,
@@ -401,6 +413,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -432,6 +445,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -18,23 +18,18 @@ struct CameraView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            
-            
-            
+
             ZStack {
                 
                 CameraCaptureView(viewModel: viewModel)
                     .frame(width: screenWidth, height: viewModel.isScaling ? screenWidth * 1.33 : screenWidth)
-//                    .clipped()
                 
                 if let image = viewModel.capturedImage {
                     Image(uiImage: image)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: screenWidth, height: viewModel.isScaling ? screenWidth * 1.33 : screenWidth)
-//                        .clipped()
                 }
-                
 
                 VStack {
                     Spacer()
@@ -61,15 +56,7 @@ struct CameraView: View {
                 Spacer()
                 Button {
                     viewModel.takePhoto()
-//                    if viewModel.isCameraActive {
-//                        viewModel.didTapCapture = true
-//                    } else {
-//                        viewModel.capturedImage = nil
-//                    }
-//
-//                    viewModel.isCameraActive.toggle()
-                    
-                    
+  
                 } label: {
                     Image(systemName: "circle.dashed")
                         .resizable()
@@ -79,8 +66,6 @@ struct CameraView: View {
                 }
                 Spacer()
             }
-            
-            
         }
     }
 }
